@@ -1,0 +1,13 @@
+<body>
+    <div class="pagina">
+        <div> </div>
+        
+        <div>
+            <h2 appTamanoTitulo="titulo">Bienvenido</h2>
+            <p>Dirigete a Listado para ver todos los alumnos inscriptos</p>
+        </div>
+        <div *ngIf="usuario=='ADMIN'">
+            <p>Desde allí podrás modificar, eliminar o dar de alta alumnos!</p>
+        </div>
+    </div>
+    </body>
