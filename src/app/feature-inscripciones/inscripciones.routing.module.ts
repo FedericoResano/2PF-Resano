@@ -8,7 +8,10 @@ import { InscripcionesComponent } from './inscripciones/inscripciones.component'
 
 
 const routes: Routes =[
-  
+  {
+    path: '',
+    component: InscripcionesListComponent
+  },
   {
       path:'alta',
       component: InscripcionesComponent

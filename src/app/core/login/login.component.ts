@@ -17,13 +17,15 @@ export class LoginComponent implements OnInit {
   })
   ngOnInit(): void {
     localStorage.clear();
+    console.log(localStorage);
   }
 
+  
   //Cargo el dato del usuario en el localStorage y redirijo a la pagina de Inicio
   submit(){
     localStorage.setItem('usuario',this.loginFormGroup.get("Usuario")?.value);
     let dato=localStorage.getItem('usuario');
-    this.router.navigate(["inicio"]);
+    this.router.navigate(["/inicio"]);
     console.log(dato);
 
   }

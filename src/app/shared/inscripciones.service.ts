@@ -27,7 +27,6 @@ export class InscripcionesService {
     );
   }
 
-
   //metodo delete para eliminar alumno
   delete(id:number){
     return this.http.delete(this.inscripcionesUrl + '/' + id).pipe(

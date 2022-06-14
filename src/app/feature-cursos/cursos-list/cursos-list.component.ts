@@ -21,6 +21,8 @@ export class CursosListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    //GUardo la suscripcion y lleno la variable para la grilla
     this.sub = this.serviceCursos.getAll().subscribe({
       next: Cursos => {
         this.cursos = Cursos;
@@ -29,6 +31,7 @@ export class CursosListComponent implements OnInit, OnDestroy {
     })
   }
 
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

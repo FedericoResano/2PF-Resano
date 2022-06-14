@@ -20,6 +20,8 @@ export class AgregarCursoComponent implements OnInit, OnDestroy {
   constructor(private activatedRoute: ActivatedRoute, private router: Router,
     private cursosServicio: CursosService,
     private formBuilder: FormBuilder) {};
+
+    //Armo el form
     agregarFormGroup: FormGroup = this.formBuilder.group({
       curso:['', [Validators.required, Validators.maxLength(50)]],
       duracion:['', [Validators.required, Validators.maxLength(50)]],
@@ -29,6 +31,7 @@ export class AgregarCursoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  //Cargo los datos del form y genero el post 
   submit(){
     this.curso= {
       id: 0,
@@ -37,12 +40,14 @@ export class AgregarCursoComponent implements OnInit, OnDestroy {
       precio: this.agregarFormGroup.controls["precio"].value
     };
 
+    //Guardo la suscripcion
     this.sub = this.cursosServicio.add(this.curso).subscribe((resp)=> {
       this.router.navigate(["/cursos"])
     })
 
   };
 
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

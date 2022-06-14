@@ -3,12 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgregarAlumnoComponent } from './agregar/agregar.component';
 import { DetallesAlumnoComponent } from './detalles/detalles.component';
 import { EliminarAlumnoComponent } from './eliminar/eliminar.component';
+import { GrillaAlumnosComponent } from './grilla-alumnos/grilla-alumnos.component';
 import { ModificarAlumnoComponent } from './modificar/modificar.component';
 
 
 
 const routes: Routes = [
 
+    {
+        path: 'alumnos',
+        component: GrillaAlumnosComponent
+      },
     {
         path: 'agregar',
         component: AgregarAlumnoComponent

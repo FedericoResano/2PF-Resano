@@ -37,5 +37,35 @@
   }
   
   .boton{
+    margin-top: 20px;
     background-color: cornflowerblue;
   }
+  
+  th{
+    background-color: aliceblue;
+    color: cornflowerblue;
+    font-size: medium;
+    text-align: center;
+  }
+  td{
+    background-color: white;
+    color: cornflowerblue;
+    font-size: 1rem;
+    text-align: center;
+  
+   
+  }
+  table {
+    width: 25%;
+    margin-top: 40px;
+    
+  }
+
+  .example-button-row {
+    display: table-cell;
+    width: 100px;
+  }
+  .cabecera{
+    text-align: center;
+  }
+  

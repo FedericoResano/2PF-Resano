@@ -20,6 +20,7 @@ export class InscripcionesListComponent implements OnInit, OnDestroy {
 
   }
 
+  //Guardo la sub y traigo los datos para armar la tabla.
   ngOnInit(): void {
     this.sub = this.serviceCursos.getAll().subscribe({
       next: Inscripciones => {
@@ -31,6 +32,7 @@ export class InscripcionesListComponent implements OnInit, OnDestroy {
 
   }
 
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

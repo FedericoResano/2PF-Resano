@@ -21,6 +21,7 @@ export class GrillaAlumnosComponent implements OnInit,  OnDestroy {
   }
 
   ngOnInit(): void {
+    //Guardo la suscripcion y genero la variable para la grilla
     this.sub = this.serviceAlumnos.getAll().subscribe({
       next: Alumnos => {
         this.alumnos = Alumnos;
@@ -29,6 +30,7 @@ export class GrillaAlumnosComponent implements OnInit,  OnDestroy {
     })
   }
 
+  //Desuscribo
   ngOnDestroy():void{
     this.sub.unsubscribe();
   }

@@ -41,15 +41,16 @@ export class EliminarAlumnoComponent implements OnInit, OnDestroy {
   })
 
   ngOnInit(): void {
+    
     //Llamo al get del servicio para que me cargue los datos en el formulario y aca cargo el id en una variable para luego pasarla en le post.
+
+    //Cargo la suscripcion    
     this.sub= this.activatedRoute.params.subscribe((params) => {
       this.id = params["id"];
-      this.alumnosServicio.get(this.id).pipe(map((x: Alumnos) => {
-        x.fechaNacimiento = this.pipeFecha.transform(x.fechaNacimiento);
-        return x;
-      })).subscribe({
+      this.alumnosServicio.get(this.id).subscribe({
         next: Alumnos => {
           this.alumno = Alumnos;
+          debugger;
           this.eliminarFormGroup.patchValue(Alumnos);
           this.eliminarFormGroup.disable();
         },
@@ -71,6 +72,7 @@ export class EliminarAlumnoComponent implements OnInit, OnDestroy {
   })
 };
 
+//Desuscribo
 ngOnDestroy(): void{
   this.sub.unsubscribe();
 }

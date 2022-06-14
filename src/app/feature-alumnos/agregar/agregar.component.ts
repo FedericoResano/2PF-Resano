@@ -33,6 +33,7 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  //Post para agregar alumno
   submit(){
     this.alumno= {
       id: 0,
@@ -44,12 +45,14 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
       usuario: this.agregarFormGroup.controls["usuario"].value,
     };
 
+    //guardo la suscripcion
     this.sub= this.alumnosServicio.add(this.alumno).subscribe((resp)=> {
       this.router.navigate(["/alumnos"])
     })
 
   };
 
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

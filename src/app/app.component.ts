@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = '2PF-Resano';
+  usuario = localStorage.getItem('usuario');
 }

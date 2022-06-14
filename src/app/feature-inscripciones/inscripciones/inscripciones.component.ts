@@ -29,11 +29,11 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
     private cursosServicio: CursosService,
     private formBuilder: FormBuilder) {};
     altaFormGroup: FormGroup = this.formBuilder.group({
-      alumno:['', Validators.required],
-      curso:['', Validators.required],
+      alumno:[''],
+      curso:[''],
       fechaInicio:['', Validators.required],
-      idAlumno:[''],
-      idCurso:[''],
+      idAlumno:['', Validators.required],
+      idCurso:['', Validators.required],
     })
 
   ngOnInit(): void {
@@ -45,22 +45,26 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
     })
   }
 
+  //Hago el post para agregar una suscripcion y guardo la suscripcion
   submit(){
+    //Cargo los datos del alumno y del curso, para despues poder guardarme el nombre del alumno y del curso.
+    var descripcionAlumno = this.alumnos.find(x => x.id ==  this.altaFormGroup.controls["idAlumno"].value)
+    var descripcionCurso = this.cursos.find(x => x.id ==  this.altaFormGroup.controls["idCurso"].value)
     this.inscripcion= {
       id: 0,
-      idAlumno: this.altaFormGroup.controls["alumno"].value,
-      curso: this.altaFormGroup.controls["curso"].value,
+      idAlumno: this.altaFormGroup.controls["idAlumno"].value,
+      curso: descripcionCurso.curso,
       fechaInicio: this.altaFormGroup.controls["fechaInicio"].value,
-      idCurso: this.altaFormGroup.controls["curso"].value,
-      alumno: this.altaFormGroup.controls["alumno"].value
-      
+      idCurso: this.altaFormGroup.controls["idCurso"].value,
+      alumno: descripcionAlumno.apellido + ', ' + descripcionAlumno.nombre
     };
 
     this.sub = this.inscripcionesServicio.add(this.inscripcion).subscribe((resp)=> {
-      this.router.navigate(["/inscripciones"])
+      this.router.navigate(["inscripciones"])
     })
   }
 
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

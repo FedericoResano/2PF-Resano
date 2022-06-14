@@ -32,19 +32,20 @@ export class ModificarCursoComponent implements OnInit, OnDestroy {
   })
 
   ngOnInit(): void {
-
+    //Guardo la suscripcion y recupero los datos para llenar el formulario
     this.sub = this.activatedRoute.params.subscribe((params) => {
       var id = params["id"];
       this.cursosServicio.get(id).subscribe({
         next: Cursos => {
           this.curso = Cursos;
+          this.modificarFormGroup.patchValue(Cursos);
         },
         error: err => this.errorMessage = err,
       })
-        this.modificarFormGroup.patchValue(Cursos);
+        
       })
   }
-  //Cargo los datos que tengo en el formulario en la propiedad de alumno y se la paso en un update al servicio. Redirijo a la pagina del listado
+  //Cargo los datos que tengo en el formulario en la propiedad de curso y se la paso en un update al servicio. Redirijo a la pagina del listado
   submit() {
     this.curso.curso = this.modificarFormGroup.get("curso")?.value;
     this.curso.duracion = this.modificarFormGroup.get("duracion")?.value;
@@ -54,7 +55,7 @@ export class ModificarCursoComponent implements OnInit, OnDestroy {
       this.router.navigate(["cursos"]);
     })
   }
-
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

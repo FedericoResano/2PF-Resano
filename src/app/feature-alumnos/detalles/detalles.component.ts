@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Alumnos } from 'src/app/shared/alumnos';
 import { AlumnosService } from 'src/app/shared/alumnos.service';
+import { Inscripciones } from 'src/app/shared/inscripciones';
+import { InscripcionesService } from 'src/app/shared/inscripciones.service';
 
 @Component({
   selector: 'app-detalles',
@@ -12,46 +14,80 @@ import { AlumnosService } from 'src/app/shared/alumnos.service';
 })
 export class DetallesAlumnoComponent implements OnInit, OnDestroy {
 
-  title= 'Detalle de Alumno'
+  title = 'Detalle de Alumno'
   usuario = localStorage.getItem('usuario');
   alumno: Alumnos;
   id: number;
-  errorMessage:'';
+  errorMessage: '';
   sub: Subscription;
+  inscripciones: Inscripciones[];
+  displayedColumns: string[] = ['inscripciones', 'accion'];
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router,
     private alumnosServicio: AlumnosService,
+    private inscripcionesServicio: InscripcionesService,
     private formBuilder: FormBuilder) { };
 
-  detalleFormGroup: FormGroup = this.formBuilder.group({  
+  detalleFormGroup: FormGroup = this.formBuilder.group({
     nombre: ['', [Validators.required, Validators.maxLength(100)]],
     apellido: ['', [Validators.required, Validators.maxLength(100)]],
     mail: ['', [Validators.required, Validators.email]],
     edad: ['', [Validators.required, Validators.max(99)]],
-    fechaNacimiento: ['', Validators.required],
+    fechaNacimiento: [new Date(), Validators.required],
     usuario: ['', [Validators.required, Validators.maxLength(50)]],
 
   })
 
   ngOnInit(): void {
+
+    //guardo la suscripcion y cargo el form con los datos
+
     this.sub = this.activatedRoute.params.subscribe((params) => {
       this.id = params["id"];
       this.alumnosServicio.get(this.id).subscribe({
         next: Alumnos => {
           this.alumno = Alumnos;
+          this.detalleFormGroup.patchValue(Alumnos);
+          this.detalleFormGroup.disable();
+          //Cargo la variable de inscripciones para generar la tabla donde se muestran los cursos a los que está inscripto
+          this.inscripciones = this.performFilter(this.id);
         },
         error: err => this.errorMessage = err,
       })
-        this.detalleFormGroup.patchValue(Alumnos);
-        this.detalleFormGroup.disable();
-      })
+
+    })
   }
 
-  submit(){
+  submit() {
     this.router.navigate(["alumnos"]);
   }
- 
+
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  //Me traigo los cursos a los que esta inscripto el alumno y luego lo cargo en el OnInit
+  performFilter(IdAlumno: number): Inscripciones[] {
+    this.inscripcionesServicio.getAll().subscribe({
+      next: Inscripciones => {
+        this.inscripciones = Inscripciones.filter((inscripcion: Inscripciones) =>
+          inscripcion.idAlumno == IdAlumno);
+      },
+      error: err => this.errorMessage = err,
+    });
+    return this.inscripciones
+
+  }
+
+  //Posta para eliminar la inscripción del alumno a un curso
+  desinscribirAlumno(id: number) {
+    this.inscripcionesServicio.delete(id).subscribe((resp) => {
+      this.inscripcionesServicio.getAll().subscribe((data) => {
+        this.inscripciones = data;
+      })
+    })
+    this.router.navigate(["/alumnos"])
+
   }
 }

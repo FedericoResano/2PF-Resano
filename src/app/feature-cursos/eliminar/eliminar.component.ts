@@ -34,6 +34,7 @@ export class EliminarCursoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     //Llamo al get del servicio para que me cargue los datos en el formulario y aca cargo el id en una variable para luego pasarla en le post.
+    //Guardo la suscripcion
     this.sub = this.activatedRoute.params.subscribe((params) => {
       this.id = params["id"];
       this.cursosServicio.get(this.id).subscribe({
@@ -46,16 +47,17 @@ export class EliminarCursoComponent implements OnInit, OnDestroy {
       })
     })
   }
-  //Envio la el id del alumno a eliminar y regenero la propiedad alumnos[] para tenerla actuaizada. Redirijo a la lista de alumnos
+  //Envio el id del curso a eliminar y regenero la propiedad cursos[] para tenerla actuaizada. Redirijo a la lista de cursos
   submit() {
     this.cursosServicio.delete(this.id).subscribe((resp) => {
       this.cursosServicio.getAll().subscribe((data) => {
         this.cursos = data;
       })
-      this.router.navigate(["/cursos"])
+      this.router.navigate(["cursos"])
     })
   };
 
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

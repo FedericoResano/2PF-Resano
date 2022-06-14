@@ -17,19 +17,19 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <div *ngIf="this.altaFormGroup.get('alumno')?.errors?.['required'] && !altaFormGroup.get('alumno')?.pristine"
+              <div *ngIf="this.altaFormGroup.get('idAlumno')?.errors?.['required'] && !altaFormGroup.get('idAlumno')?.pristine"
                 class="alert alert-danger">Debe seleccionar un alumno</div>
         </div>
         <div  class="col-md-4">
             <mat-form-field appearance="outline">
                 <mat-label>Curso</mat-label>
-                <mat-select formControlName="curso">
+                <mat-select formControlName="idCurso">
                   <mat-option *ngFor="let curso of cursos" [value]="curso.id">
                     {{(curso.curso| uppercase)}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <div *ngIf="this.altaFormGroup.get('curso')?.errors?.['required'] && !altaFormGroup.get('curso')?.pristine"
+              <div *ngIf="this.altaFormGroup.get('idCurso')?.errors?.['required'] && !altaFormGroup.get('idCurso')?.pristine"
                 class="alert alert-danger">Debe seleccionar un curso</div>
         </div>
         <div class="col-md-4">

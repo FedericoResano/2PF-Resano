@@ -9,7 +9,10 @@ import { ModificarCursoComponent } from './modificar/modificar.component';
 
 
 const routes: Routes =[
-  
+  {
+    path: '',
+    component: CursosListComponent
+  },
   {
       path:'agregar',
       component: AgregarCursoComponent

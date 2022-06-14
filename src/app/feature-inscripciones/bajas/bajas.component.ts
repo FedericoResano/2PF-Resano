@@ -38,13 +38,14 @@ export class BajasComponent implements OnInit, OnDestroy {
     fechaInicio: ['', Validators.required],
   })
 
+  //Guardo la suscripcin y lleno el form con los datos y lo deshabilito
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.id = params["id"];
-      this.inscripcionesServicio.get(this.id).subscribe({
+     this.sub= this.inscripcionesServicio.get(this.id).subscribe({
         next: Inscripciones => {
           this.inscripcion = Inscripciones;
-          this.bajaFormGroup.patchValue(Cursos);
+          this.bajaFormGroup.patchValue(Inscripciones);
           this.bajaFormGroup.disable();
         },
         error: err => this.errorMessage = err,
@@ -53,17 +54,18 @@ export class BajasComponent implements OnInit, OnDestroy {
 
 
   }
-  //Envio la el id del alumno a eliminar y regenero la propiedad alumnos[] para tenerla actuaizada. Redirijo a la lista de alumnos
+  //Envio el id de la inscripcion a eliminar y regenero la propiedad inscripciones[] para tenerla actuaizada. Redirijo a la lista de inscripciones
   submit() {
     this.sub = this.inscripcionesServicio.delete(this.id).subscribe((resp) => {
       this.inscripcionesServicio.getAll().subscribe((data) => {
         this.inscripciones = data;
+        this.router.navigate(["inscripciones"])
       })
-      this.router.navigate(["/inscripciones"])
+      
     })
   };
 
-
+  //Desuscribo
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
